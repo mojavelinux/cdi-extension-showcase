@@ -7,5 +7,6 @@ public class StatusUpdater {
         if (status.length() > maxStatusLength) {
             throw new IllegalArgumentException("Post too long!");
         }
+        System.out.println(status);
     }
 }

@@ -17,8 +17,7 @@ public class ManagedBeanAnnotationAdapterExtension implements Extension {
                 !original.isAnnotationPresent(Named.class)) {
             AnnotatedType<X> modified = new AnnotatedTypeBuilder<X>()
                   .readFromType(event.getAnnotatedType(), true)
-                  .addToClass(
-                        new NamedLiteral(original.getAnnotation(ManagedBean.class).value()))
+                  .addToClass(new NamedLiteral(original.getAnnotation(ManagedBean.class).value()))
                   .create();
             event.setAnnotatedType(modified);
         }

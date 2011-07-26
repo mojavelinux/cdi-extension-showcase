@@ -42,7 +42,6 @@ import javax.interceptor.InterceptorBinding;
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>
  */
 @ConversationBoundary
-@InterceptorBinding
 @Target( { METHOD, TYPE })
 @Retention(RUNTIME)
 public @interface End

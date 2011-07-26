@@ -1,12 +1,10 @@
-package com.acme.test.importbeans;
-
-import java.security.SecureRandom;
+package com.acme.test.vetobean;
 
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -16,23 +14,23 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.acme.importbeans.ImportBeansExtension;
+import com.acme.vetobean.EntityVetoExtension;
 
 @RunWith(Arquillian.class)
-public class ImportBeansExtensionTest {
+public class EntityVetoExtensionTest {
     @Deployment
     public static Archive<?> createArchive() {
         return ShrinkWrap.create(JavaArchive.class)
-            .addClass(ImportBeansExtension.class)
-            .addAsServiceProvider(Extension.class, ImportBeansExtension.class)
+            .addClass(EntityVetoExtension.class)
+            .addClass(SampleEntity.class)
+            .addAsServiceProvider(Extension.class, EntityVetoExtension.class)
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
-    @Inject Instance<SecureRandom> random;
+    @Inject Instance<SampleEntity> sampleEntity;
     
     @Test
-    public void shouldRegisterSecureRandomAsBean() {
-        Assert.assertFalse(random.isUnsatisfied());
-        System.out.println(random.get().nextInt());
+    public void shouldVetoEntity() {
+        Assert.assertTrue(sampleEntity.isUnsatisfied());
     }
 }
